@@ -18,7 +18,7 @@ CREATE TABLE DiningRatings (
 )
 
 -- ask rali for more info 
-CREATE TABLE Preferneces(
+CREATE TABLE Preferences(
 	pid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
 )
