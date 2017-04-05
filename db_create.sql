@@ -11,6 +11,8 @@ CREATE TABLE EmailPreferences(
 	preferences VARCHAR(256) --a string, possibly seperate prefs by commas/spaces
 );
 
+-- discuss with professor on approach
+-- more rows or more columns
 CREATE TABLE DiningRatings (
 	drid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	dininghall VARCHAR(256) NOT NULL,
