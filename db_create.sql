@@ -27,14 +27,15 @@ CREATE TABLE Cuisine(
 );
 
 -- might switch to excel file
-CREATE TABLE Dishes(
-	dishid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	dname VARCHAR(256) NOT NULL,
-	cid INT UNSIGNED NOT NULL ,
+CREATE TABLE Scores(
+	sid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	dname VARCHAR(50),
+	cid INT UNSIGNED NOT NULL,
+	score INT,
+	day DATE,
+	meal VARCHAR(256),
 	FOREIGN KEY (cid) REFERENCES Cuisine(cid)
-
 );
-
 -- check scheme
 Describe EmailPreferences;
 Describe DiningRatings;
