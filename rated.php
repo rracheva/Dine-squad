@@ -14,8 +14,8 @@ include ('dbconn.php');
 	}
 	# code...
 }
-echo $_POST['Hall'];
-echo $_POST['rating'];
+// echo $_POST['Hall'];
+// echo $_POST['rating'];
 $meal = $_POST['meal'];
 
 
@@ -23,29 +23,36 @@ $meal = $_POST['meal'];
 
 
 $ratedDay= $_POST['day'];
-echo "rated day ". $ratedDay;
+//echo "rated day ". $ratedDay;
 //echo <br>; 
 //echo " current date" . $date;
 
 //$Currentdayofweek = date('w', strtotime($date));
-echo "<br>";
-//echo $Currentdayofweek == $ratedDay;
 
-
-echo "<br>";
-echo "<br>";
 //echo $Currentdayofweek;
 
 // setting cookies
 // so first we get the date
 $date = date("Y/m/d",time());
 $Currentdayofweek = date('w', strtotime($date));
-echo "current day of the week ".$Currentdayofweek; 
+//echo "current day of the week ".$Currentdayofweek; 
 $difference = $Currentdayofweek - $ratedDay;
 echo "<br>";
 echo "<br>";
-echo "this is differenece ";
-echo $difference;
+echo "testing can rate  ";
+$canRate = false;
+
+
+if($difference>=0 && $difference<3){
+	echo "positive differences";
+} 
+elseif($Currentdayofweek < 2 && abs($difference) > 4){
+	echo "true";
+	echo $difference;
+}
+
+$canRate = false;
+//echo $difference;
 	//get the date of the rated day
 	//if currentDayoftheWeek is > then rated day
 	//then you will subtract the difference in days
@@ -55,6 +62,7 @@ echo $difference;
 
 
 //echo $date;
+// probably only allow rating if difference current day - rated day is 3
 $conn = connect_to_db('testRatings');
 $diningHall =$_POST['Hall'];
 $rating = $_POST['rating'];
@@ -64,16 +72,23 @@ $resultRating = $conn->query($addRatingQuery);
 //set cookie for day and meal rated
 //to make the cookie name mutiply day rating 1 mon 7 sun
 // day -1 * meal (1,2,3)
-echo "<br>";
-echo "<br>";
-echo getMealNum($meal);
+//echo "<br>";
+//echo "<br>";
+//echo getMealNum($meal);
 
-$mealDayRating = $ratedDay*3 + getMealNum($meal);
+$mealDay = $ratedDay*3 + getMealNum($meal);
 
-echo "<br>";
-echo "<br>";
+//echo "<br>";
+//echo "<br>";
 
-echo $mealDayRating;
-
+//echo $mealDay;
 if(!$resultRating)die("Data failed".$conn->error);
+
+// if(!isset($_COOKIE['$mealDay'])){
+// 	setcookie('$mealDay','val', time() + (86400), "/");
+// 	echo "cookie set";
+// }
+// else{
+// 	echo "cookie is set";
+// }
 ?>
