@@ -23,8 +23,8 @@ $meal = $_POST['meal'];
 
 
 $ratedDay= $_POST['day'];
-//echo "rated day ". $ratedDay;
-//echo <br>; 
+echo "rated day ". $ratedDay;
+echo "<br>"; 
 //echo " current date" . $date;
 
 //$Currentdayofweek = date('w', strtotime($date));
@@ -35,21 +35,27 @@ $ratedDay= $_POST['day'];
 // so first we get the date
 $date = date("Y/m/d",time());
 $Currentdayofweek = date('w', strtotime($date));
-//echo "current day of the week ".$Currentdayofweek; 
+echo "current day of the week ".$Currentdayofweek; 
 $difference = $Currentdayofweek - $ratedDay;
 echo "<br>";
 echo "<br>";
 echo "testing can rate  ";
 $canRate = false;
-
+$cookieExpiration = 0;
 
 if($difference>=0 && $difference<3){
 	echo "positive differences";
+	$cookieExpiration = 7 - $difference;
+	echo $difference;
 } 
 elseif($Currentdayofweek < 2 && abs($difference) > 4){
 	echo "true";
-	echo $difference;
+	//difference = 5 or 6
+	$cookieExpiration =  7-(7-abs($difference));
 }
+
+echo "<br>";
+echo "experiation of cookie ". $cookieExpiration;
 
 $canRate = false;
 //echo $difference;
@@ -85,7 +91,7 @@ $mealDay = $ratedDay*3 + getMealNum($meal);
 if(!$resultRating)die("Data failed".$conn->error);
 
 // if(!isset($_COOKIE['$mealDay'])){
-// 	setcookie('$mealDay','val', time() + (86400), "/");
+// 	setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
 // 	echo "cookie set";
 // }
 // else{

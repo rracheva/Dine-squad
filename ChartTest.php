@@ -2,17 +2,19 @@
 session_start(); 
 include ('dbconn.php');
 $conn = connect_to_db('testRatings');
- echo "uptop";
+
 
 $getRatingsQuery = "SELECT hall, AVG(rating) as rating  FROM Ratings GROUP BY hall;";
+if(isset($_POST['timeSpan'])){
+  echo "post working";
+}
  //cd /Applications/MAMP/Library/bin
  //./mysql --host=localhost -u root -proot
  //$getRatingQuery = "SELECT hall FROM DiningRatings";
 $getRatingsResult = $conn->query($getRatingsQuery);
 if(!$getRatingsResult)die("Data failed".$conn->error);
-echo "here";
+
  $row = mysqli_fetch_assoc($getRatingsResult);
- echo $row['rating'];
  $scores = array();
  $num = 0;
 while(!empty($row)){
@@ -68,6 +70,20 @@ while(!empty($row)){
   </head>
 
   <body>
+    <form id="selectRatingsForm" method="post">
+      <select name="timeSpan">
+        <option name="day">Day of week</option>
+        <option name="week">week</option>
+        <option name="overall">overall</option>
+      </select>
+
+      <select name ="meal">
+        <option name="all">all</option>
+        <option name="breakfast">breakfast</option>
+        <option name="lunch">lunch</option>
+        <option name="dinner">dinner</option>
+      </select>
+    </form>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
     <div id="testing"></div>

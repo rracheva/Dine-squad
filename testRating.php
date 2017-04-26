@@ -8,7 +8,7 @@ session_start();
 <head>
 	<meta charset="utf-8">
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="ratingCookieScript.js"></script>
+	<script src="ratingValidate.js"></script>
 </head>
 
 <body>
@@ -16,7 +16,7 @@ session_start();
 	<br>
 	<br>
 	<br>
-	<form method= "post" action="rated.php" id="cookieRatingForm">
+	<form id="ratingForm" method= "post" action="rated.php" id="cookieRatingForm">
 		<select name="Hall">
 			<option value ="Scripps"> Scripps </option>
 			<option value ="Mudd"> Mudd </option>
@@ -32,8 +32,8 @@ session_start();
 			<option value = "lunch"> Lunch </option>
 			<option value = "dinner">Dinner</option>
 		</select>
-		<select name = "day">
-			<option value="1"> Monay </option>
+		<select id="day" name = "day">
+			<option value="1"> Monday </option>
 			<option value="2"> Tuesday </option>
 			<option value="3"> Wednesday </option>
 			<option value="4"> Thursday </option>
