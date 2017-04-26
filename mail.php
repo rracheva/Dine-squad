@@ -10,39 +10,97 @@
 
 // Multiple recipients
 // just a string seperated by commas
-$to = 'rar32013@gmail.com, rar32013@pomona.edu'; // note the comma
+// match email with preference
+
+// get json ranking
+// update with real path to json files
+$string_break = file_get_contents("/data.json");
+$json_break_ranking = json_decode($string_break, true);
+$string_lunch = file_get_contents("/data.json");
+$json_lunch_ranking = json_decode($string_lunch, true);
+$string_dinner = file_get_contents("/data.json");
+$json_dinner_ranking = json_decode($string_dinner, true);
+// connect to db
+include ('dbconn.php');
+$conn = connect_to_db('testRatings');
+$query = "SELECT E.email,E.preferences FROM EmailPreferences as E";
+$result = mysql_query($query);  
+
+
+ 
+$array_email_preference_outcome = array();
+
+while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+  $email = $row['email'];
+  $preference = $row['preferences'];
+  $array_preference = meal_dininghall($preference);
+  $array_email_preference_outcome[$email] = $array_preference;
+}
+
+
+function meal_dininghall(preference){
+  $preferences_dininghall_meal = array();
+  foreach ($json_break_ranking as $key => $value) {
+    if (strcmp($key, $preference) == 0){
+      $preferences_dininghall_meal[]['breakfast'] = key($value[0]);
+    }
+  }
+  foreach ($json_lunch_ranking as $key => $value) {
+    if (strcmp($key, $preference) == 0){
+      $preferences_dininghall_meal['lunch'] = key($value[0]);
+    }
+  }
+  foreach ($json_dinner_ranking as $key => $value) {
+    if (strcmp($key, $preference) == 0){
+      $preferences_dininghall_meal['dinner'] = key($value[0]);
+    }
+  }
+  return $preferences_dininghall_meal;
+}
+
+//$to = 'rar32013@gmail.com, rar32013@pomona.edu, ralitsa.racheva@pomona.edu'; // note the comma
 
 // Subject
-$subject = 'Birthday Reminders for August';
+$subject = 'Claremont dining hall preferences';
 
-// Message
-$message = '
-<html>
-<head>
-  <title>Birthday Reminders for August</title>
-</head>
-<body>
-  <p>Here are the birthdays upcoming in August!</p>
-  <table>
-    <tr>
-      <th>Person</th><th>Day</th><th>Month</th><th>Year</th>
-    </tr>
-    <tr>
-      <td>Johny</td><td>10th</td><td>August</td><td>1970</td>
-    </tr>
-    <tr>
-      <td>Sally</td><td>17th</td><td>August</td><td>1973</td>
-    </tr>
-  </table>
-</body>
-</html>
-';
+
+
 
 // To send HTML mail, the Content-type header must be set
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
-// Mail it
-// works on macs not on windows
-mail($to, $subject, $message, implode("\r\n", $headers));
+
+
+while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+  $to = $row['email'];
+  $message = '
+
+
+
+  <html>
+  <head>
+    <title>Suggestion where you should go</title>
+  </head>
+  <body>
+    
+    <table>
+      <tr>
+        <th>For breakfast go to'+ .$array_email_preference_outcome[$email]['breakfast'].'</th>
+      </tr>
+      <tr>
+        <td>For lunch go to'+ .$array_email_preference_outcome[$email]['lunch'].'</th>
+      </tr>
+      <tr>
+        <td>For dinner go to'+ .$array_email_preference_outcome[$email]['dinner'].'</th>
+      </tr>
+    </table>
+  </body>
+  </html>
+  ';
+  // Mail it
+  // works on macs not on windows
+
+  mail($to, $subject, $message, implode("\r\n", $headers));
+}
 ?>
