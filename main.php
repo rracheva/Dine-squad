@@ -2,9 +2,18 @@
 //include CSS Style Sheet
 echo "<link rel='stylesheet' type='text/css' href='main.css' />";
 
+
+
+$tmp=exec("/c/python27/python ascp_menu.py",$out);
+
+var_dump($out);
+
+
+
 $dininghall= "Frary";
 // $meal= "Lunch";
 
+// pass in arrays from query
 $arr=array('xx1','tacos','fish', 'socks');
 $arr2=array('xx2','tacos','fish', 'socks');
 $arr3=array('xx3','tacos','fish', 'socks');
