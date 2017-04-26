@@ -25,7 +25,13 @@ session_start();
 			<option value ="Frank"> Frank </option>
 			<option value ="CMC"> CMC </option>
 		</select>
-		<input name="rating" value="rating">
+		<select name=rating>
+			<<option value="1">1 </option>
+			<option value="2"> 2 </option>
+			<option value="3"> 3 </option>
+			<option value="4"> 4 </option>
+			<option value="5"> 5 </option>
+		</select>
 		<br>
 		<select name= "meal" id="mealSelect">
 			<option value = "breakfast"> Breakfast </option>

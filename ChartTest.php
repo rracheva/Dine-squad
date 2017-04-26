@@ -2,11 +2,23 @@
 session_start(); 
 include ('dbconn.php');
 $conn = connect_to_db('testRatings');
-
-
-$getRatingsQuery = "SELECT hall, AVG(rating) as rating  FROM Ratings GROUP BY hall;";
+//first query
+//SELECT * FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY;
+//SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY GROUP BY hall;
+$getRatingsQuery = "SELECT hall, AVG(rating) as rating  FROM Ratings GROUP BY hall";
 if(isset($_POST['timeSpan'])){
-  echo "post working";
+  echo $_POST['timeSpan'];
+  if($_POST['timeSpan']=="week"){
+    echo "we in week";
+    $getRatingsQuery = "SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY GROUP BY hall";
+  }
+  elseif($_POST['timeSpan']=="Current Day"){
+    echo "we in here";
+    $getRatingsQuery = "SELECT hall, AVG(rating) as rating FROM Ratings Where DAYOFWEEK(timedate) = DAYOFWEEK(curdate()) GROUP BY hall";
+  }
+  else {
+    echo "in else";
+  }
 }
  //cd /Applications/MAMP/Library/bin
  //./mysql --host=localhost -u root -proot
@@ -72,7 +84,7 @@ while(!empty($row)){
   <body>
     <form id="selectRatingsForm" method="post">
       <select name="timeSpan">
-        <option name="day">Day of week</option>
+        <option name="day">Current Day</option>
         <option name="week">week</option>
         <option name="overall">overall</option>
       </select>
@@ -83,6 +95,7 @@ while(!empty($row)){
         <option name="lunch">lunch</option>
         <option name="dinner">dinner</option>
       </select>
+      <input type="submit" name="submit">
     </form>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
