@@ -76,14 +76,19 @@ def main():
 	scrippsLn=menu.getMenu('scripps',day,'lunch')
 	scrippsDn=menu.getMenu('scripps',day,'dinner')
 
-	allMenus= [[frankBF,frankLn,frankDn],
-				[fraryBF,fraryLn,fraryDn],
-				[oldenborgLn],
-				[cmcBF,cmcLn,cmcDn],
-				[muddBF,muddLn,muddDn],
-				[scrippsBF,scrippsLn,scrippsDn]
-				]
-	pprint(allMenus)
+	allMenus= {'frank':[frankBF,frankLn,frankDn],
+				'frary':[fraryBF,fraryLn,fraryDn],
+				'oldenborg':[oldenborgLn],
+				'cmc':[cmcBF,cmcLn,cmcDn],
+				'mudd':[muddBF,muddLn,muddDn],
+				'scripps':[scrippsBF,scrippsLn,scrippsDn]
+				}
+	# with open('data.json', 'w') as f:
+	# 	json.dump(allMenus, f)
+
+	json_data=json.dumps(allMenus)
+
+	pprint(json_data)
 
 if __name__=='__main__':
 	main()

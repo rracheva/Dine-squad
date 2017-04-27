@@ -3,26 +3,23 @@
 echo "<link rel='stylesheet' type='text/css' href='main.css' />";
 
 
+//execute py script
+$tmp=exec("python ascp_menu.py");
+$real=substr($tmp, 1, -1);
 
-$tmp=exec("/c/python27/python ascp_menu.py",$out);
+//get menus
+$menus=json_decode($real,true);
 
-var_dump($out);
+//all dininghalls except oldenborg
+$names= array('frank','frary','cmc','mudd','scripps');
 
+// oldenborg specific (only has lunch)
+$dininghall= "Oldenborg";
+$arr=$menus['oldenborg'][0];
 
-
-$dininghall= "Frary";
-// $meal= "Lunch";
-
-// pass in arrays from query
-$arr=array('xx1','tacos','fish', 'socks');
-$arr2=array('xx2','tacos','fish', 'socks');
-$arr3=array('xx3','tacos','fish', 'socks');
-
-// prints array
-// var_dump($arr);
 
 //prints menu
-echo '<table id="display">
+echo '<table align="center" "border=1 rules=rows id="display">
 <tr>
 	 <th>DiningHall</th>
 	 <th>Bfast</th>
@@ -30,25 +27,33 @@ echo '<table id="display">
 	 <th>Din</th>
 </tr>';
 
-echo '<td>'.$dininghall. '</td>';
+echo '<tr><td>'.$dininghall. '</td>';
 // bfast
+echo '<td> </td>';
+// lunch
 echo '<td> ';
 foreach ($arr as $val){
 	echo '<li>' . $val . '</li>';
 }
 echo "</td>";
-// lunch
-echo '<td> ';
-foreach ($arr2 as $val){
-	echo '<li>' . $val . '</li>';
-}
-echo "</td>";
 // dinner
-echo '<td> ';
-foreach ($arr3 as $val){
-	echo '<li>' . $val . '</li>';
+echo '<td> </td></tr>';
+
+foreach ($names as $name) {
+	echo '<tr>
+			<td>'. $name. '</td>';
+	foreach ($menus[$name] as $meals) {
+			echo '<td>';
+			foreach ($meals as $specificMeal) {
+				echo '<li>'. $specificMeal. '</li>';	
+			}
+			echo '</td>';
+			}
+	echo '</tr>';
+
+
+	
 }
-echo "</td>";
 echo '</table>';
 
 ?>
