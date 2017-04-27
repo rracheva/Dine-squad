@@ -33,6 +33,7 @@ $ratedDay= $_POST['day'];
 
 // setting cookies
 // so first we get the date
+date_default_timezone_set("America/Los_Angeles");
 $date = date("Y/m/d",time());
 $Currentdayofweek = date('w', strtotime($date));
 ///echo "current day of the week ".$Currentdayofweek; 
@@ -46,18 +47,22 @@ $cookieExpiration = 0;
 if($difference>=0 && $difference<3){
 	//echo "positive differences";
 	$cookieExpiration = 7 - $difference;
+	$canRate = true;
 	//echo $difference;
 } 
 elseif($Currentdayofweek < 2 && abs($difference) > 4){
 	//echo "true";
 	//difference = 5 or 6
 	$cookieExpiration =  7-(7-abs($difference));
+	$canRate = true;
+}
+else{
+	$canRate = false;
 }
 
 // echo "<br>";
 // echo "experation of cookie ". $cookieExpiration;
 
-$canRate = false;
 
 
 
@@ -69,9 +74,17 @@ $mealDay = $ratedDay*3 + getMealNum($meal);
 
 //echo $mealDay;
 
+$testingCookie = (string)$mealDay;
 
-if(!isset($_COOKIE['$mealDay'])){
-	setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
+
+if(!isset($_COOKIE[((string)$mealDay)]) && $canRate){
+	//setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
+	setcookie($testingCookie, "test", time()+(300));
+	//setcookie("$mealDay", 'mealDay');
+
+
+
+	print_r($_COOKIE);
 	$conn = connect_to_db('testRatings');
 	$diningHall =$_POST['Hall'];
 	$rating = $_POST['rating'];
@@ -79,11 +92,20 @@ if(!isset($_COOKIE['$mealDay'])){
 	$resultRating = $conn->query($addRatingQuery);
 	if(!$resultRating)die("Data failed".$conn->error);
 
-	echo "cookie set and Day rated";
-	echo "<br>";
-	echo "$mealDay";
+	// echo "cookie set and Day rated";
+
+	// echo "$mealDay";
 }
 else{
-	echo "cookie is set and day not rated";
+	 echo "cookie is set and day not rated";
+	 print_r($_COOKIE);
+
  }
+
+echo "<br>";
+echo "difference " . $difference;
+echo "<br>";
+echo "current day" . $Currentdayofweek;
+echo "<br>";
+echo "rated day ". $ratedDay;
 ?>
