@@ -5,11 +5,20 @@ CREATE DATABASE DINE;
 USE DINE;
 
 
-CREATE TABLE EmailPreferences(
+CREATE TABLE EmailInfo(
 	emailid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	email VARCHAR(256) NOT NULL,
-	preferences VARCHAR(256) --a string, possibly seperate prefs by commas/spaces
-);
+	email VARCHAR(256) NOT NULL
+)
+
+
+CREATE TABLE Preferences(
+	emailid INT UNSIGNED NOT NULL,
+	cid INT UNSIGNED NOT NULL,
+	FOREIGN KEY (emailid) REFERENCES EmailInfo (emailid),
+	FOREIGN KEY (cid) REFERENCES Cuisine(cid)
+	}
+
+
 
 -- discuss with professor on approach
 -- more rows or more columns

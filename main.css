@@ -2,9 +2,9 @@
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
-	margin: 45px;
-	width: 480px;
-	text-align: left;
+	margin: 0 auto;
+	width: 100%;
+	text-align: top;
 	border-collapse: collapse;
 	border: 1px solid #6cf;
 }
@@ -22,7 +22,12 @@
 }
 #display td
 {
+	vertical-align: top;
+	text-align: top;
 	padding: 10px 20px;
 	color: #669;
 	border-right: 1px dashed #6cf;
+}
+li{
+	vertical-align: top;
 }
