@@ -23,7 +23,8 @@ $json_dinner_ranking = json_decode($string_dinner, true);
 // connect to db
 include ('dbconn.php');
 $conn = connect_to_db('testRatings');
-$query = "SELECT E.email,E.preferences FROM EmailPreferences as E";
+$query = "SELECT Em.email,C.type FROM EmailInfo AS Em AND Preferences AS P and Cuisine AS C 
+WHERE P.cid = C.cid AND Em.emailid = P.emailid";
 $result = mysql_query($query);  
 
 
@@ -42,7 +43,7 @@ function meal_dininghall(preference){
   $preferences_dininghall_meal = array();
   foreach ($json_break_ranking as $key => $value) {
     if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal[]['breakfast'] = key($value[0]);
+      $preferences_dininghall_meal['breakfast'] = key($value[0]);
     }
   }
   foreach ($json_lunch_ranking as $key => $value) {
