@@ -56,4 +56,36 @@ foreach ($names as $name) {
 }
 echo '</table>';
 
+
 ?>
+
+<!DOCTYPE html>
+<html>
+<body>
+<form action='submitEmailPreferences.php' method='POST'>
+	<p>Email: <input type='Email' name='email' id ="email"></p>
+	<?php
+	include('dbconn.php');
+	$conn= connect_to_db('Dine');
+	$query= 'SELECT type from Cuisine';
+
+	$result= perform_query($conn,$query);
+
+	echo '<p> Preference: <select name="CuisinePreference">';
+
+	while ($row=$result->fetch_assoc()){
+		echo "<option value = '". $row["type"]. "'>".$row["type"]."</option>";
+	}
+
+	echo '</select></p>';
+	?>
+	
+
+
+
+	<input type ='submit' value= 'Subscribe!'>
+</form>
+
+</body>
+
+</html>

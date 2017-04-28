@@ -1,23 +1,32 @@
+
+
 DROP DATABASE IF EXISTS DINE;
 
 CREATE DATABASE DINE;
 
 USE DINE;
 
-GRANT ALL PRIVILEGES ON testRatings.* to root@localhost IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON DINE.* to root@localhost IDENTIFIED BY 'root';
 
 CREATE TABLE EmailInfo(
 	emailid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	email VARCHAR(256) NOT NULL
-)
+);
 
+
+CREATE TABLE Cuisine(
+	cid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	type VARCHAR(256) NOT NULL
+
+);
 
 CREATE TABLE Preferences(
 	emailid INT UNSIGNED NOT NULL,
 	cid INT UNSIGNED NOT NULL,
+	PRIMARY KEY (emailid,cid),
 	FOREIGN KEY (emailid) REFERENCES EmailInfo (emailid),
 	FOREIGN KEY (cid) REFERENCES Cuisine(cid)
-	}
+	);
 
 
 
@@ -29,12 +38,6 @@ CREATE TABLE DiningRatings (
 	rating INT UNSIGNED NOT NULL
 );
 
--- ask rali for more info 
-CREATE TABLE Cuisine(
-	cid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	type VARCHAR(256) NOT NULL,
-
-);
 
 -- might switch to excel file
 CREATE TABLE Scores(
@@ -47,6 +50,6 @@ CREATE TABLE Scores(
 	FOREIGN KEY (cid) REFERENCES Cuisine(cid)
 );
 -- check scheme
-Describe EmailPreferences;
+-- Describe EmailPreferences;
 Describe DiningRatings;
-Describe Preferneces;
+Describe Preferences;
