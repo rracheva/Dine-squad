@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+	<p align ="center">enter email and choose/update preference to get emails of when the dining halls serve your favorite food! </p>
 <form action='submitEmailPreferences.php' method='POST'>
 	<p>Email: <input type='Email' name='email' id ="email"></p>
 	
