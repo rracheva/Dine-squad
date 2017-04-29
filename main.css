@@ -33,4 +33,11 @@ li{
 
 form {
     text-align: center;
+    padding-bottom: 20px;
+   /* background-size: 40px 40px;
+    background: gray;*/
     }
+
+p{
+	font-size: 10px;
+}

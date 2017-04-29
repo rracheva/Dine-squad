@@ -1,23 +1,22 @@
-<?php 
+<?php
 session_start(); 
 include ('dbconn.php');
 $conn = connect_to_db('testRatings');
 //first query
 //SELECT * FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY;
 //SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY GROUP BY hall;
-$getRatingsQuery = "SELECT hall, AVG(rating) as rating  FROM Ratings GROUP BY hall";
+
+$getRatingsQuery;
 if(isset($_POST['timeSpan'])){
-  echo $_POST['timeSpan'];
+  $mealRating = $_POST['meal'];
   if($_POST['timeSpan']=="week"){
-    echo "we in week";
-    $getRatingsQuery = "SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY GROUP BY hall";
+    $getRatingsQuery = "SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY AND meal = '$mealRating' GROUP BY hall";
   }
   elseif($_POST['timeSpan']=="Current Day"){
-    echo "we in here";
-    $getRatingsQuery = "SELECT hall, AVG(rating) as rating FROM Ratings Where DAYOFWEEK(timedate) = DAYOFWEEK(curdate()) GROUP BY hall";
+    $getRatingsQuery = "SELECT hall, AVG(rating) as rating FROM Ratings Where DAYOFWEEK(timedate) = DAYOFWEEK(curdate()) AND meal = '$mealRating' GROUP BY hall";
   }
   else {
-    echo "in else";
+    $getRatingsQuery= "SELECT hall, AVG(rating) as rating  FROM Ratings WHERE meal = '$mealRating' GROUP BY hall";
   }
 }
  //cd /Applications/MAMP/Library/bin
@@ -30,15 +29,10 @@ if(!$getRatingsResult)die("Data failed".$conn->error);
  $scores = array();
  $num = 0;
 while(!empty($row)){
-  echo $row ['hall']. " ". $row['rating'];
   $scores[$row['hall']]=($row['rating']);
   $num++;
   $row = mysqli_fetch_assoc($getRatingsResult);
 }
-
-// $row2= mysqli_fetch_assoc($getRatingsResult);
-// echo $row2 ['hall']. " ". $row2['rating'];
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,7 +84,6 @@ while(!empty($row)){
       </select>
 
       <select name ="meal">
-        <option name="all">all</option>
         <option name="breakfast">breakfast</option>
         <option name="lunch">lunch</option>
         <option name="dinner">dinner</option>

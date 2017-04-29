@@ -1,6 +1,6 @@
 <?php
 //rating stuff
-include ('dbconn.php');
+//include ('dbconn.php');
 
 
  function getMealNum($value){
@@ -16,13 +16,11 @@ include ('dbconn.php');
 }
 // echo $_POST['Hall'];
 // echo $_POST['rating'];
-$meal = $_POST['meal'];
+if(isset($_POST['meal'])){
+	$meal = $_POST['meal'];
+	$ratedDay= $_POST['day'];
 
 
-
-
-
-$ratedDay= $_POST['day'];
 //echo "rated day ". $ratedDay;
 //echo "<br>"; 
 //echo " current date" . $date;
@@ -60,30 +58,13 @@ else{
 	$canRate = false;
 }
 
-// echo "<br>";
-// echo "experation of cookie ". $cookieExpiration;
-
-
-
-
-
 $mealDay = $ratedDay*3 + getMealNum($meal);
-
-//echo "<br>";
-//echo "<br>";
-
-//echo $mealDay;
-
 $testingCookie = (string)$mealDay;
-
 
 if(!isset($_COOKIE[((string)$mealDay)]) && $canRate){
 	//setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
-	setcookie($testingCookie, "test", time()+(300));
-	//setcookie("$mealDay", 'mealDay');
-
-
-
+	setcookie($testingCookie, "test", time()+((86400)*$cookieExpiration));
+	
 	print_r($_COOKIE);
 	$conn = connect_to_db('testRatings');
 	$diningHall =$_POST['Hall'];
@@ -91,10 +72,6 @@ if(!isset($_COOKIE[((string)$mealDay)]) && $canRate){
 	$addRatingQuery = "INSERT INTO Ratings VALUES (NULL, '$diningHall', '$rating', '$meal', '$date')";
 	$resultRating = $conn->query($addRatingQuery);
 	if(!$resultRating)die("Data failed".$conn->error);
-
-	// echo "cookie set and Day rated";
-
-	// echo "$mealDay";
 }
 else{
 	 echo "cookie is set and day not rated";
@@ -108,4 +85,5 @@ echo "<br>";
 echo "current day" . $Currentdayofweek;
 echo "<br>";
 echo "rated day ". $ratedDay;
+}
 ?>
