@@ -18,16 +18,22 @@ class Menu(object):
 		)
 
 		data = json.loads(response.text)
-		list_food = data[0]['food_items']
-		regex = re.compile('[^a-zA-Z ]')
+		print len(data)
 		foodList= []
-		for item in list_food:
-			str_food = str(item)
-			str_food = regex.sub('', str_food).lower()
-			# self.processed_food.append(str_food)
-			foodList.append(str_food)
-		
-		return foodList
+		if len(data)==0:
+			foodList.append("closed")
+			return foodList
+		else:
+			list_food = data[0]['food_items']
+			regex = re.compile('[^a-zA-Z ]')
+			
+			for item in list_food:
+				str_food = str(item)
+				str_food = regex.sub('', str_food).lower()
+				# self.processed_food.append(str_food)
+				foodList.append(str_food)
+			
+			return foodList
 
 
 def main():
@@ -54,41 +60,73 @@ def main():
 		day='sun'
 	
 	menu= Menu()
-	frankBF=menu.getMenu('frank',day,'breakfast')
-	frankLn=menu.getMenu('frank',day,'lunch')
-	frankDn=menu.getMenu('frank',day,'dinner')
+	if day == 'sun' or day =='sat':
 
-	fraryBF=menu.getMenu('frary',day,'breakfast')
-	fraryLn=menu.getMenu('frary',day,'lunch')
-	fraryDn=menu.getMenu('frary',day,'dinner')
+		frankBr=menu.getMenu('frank',day,'brunch')
+		frankDn=menu.getMenu('frank',day,'dinner')
 
-	oldenborgLn=menu.getMenu('oldenborg',day,'lunch')
+		fraryBr=menu.getMenu('frary',day,'brunch')
+		fraryDn=menu.getMenu('frary',day,'dinner')
 
-	cmcBF=menu.getMenu('cmc',day,'breakfast')
-	cmcLn=menu.getMenu('cmc',day,'lunch')
-	cmcDn=menu.getMenu('cmc',day,'dinner')
 
-	muddBF=menu.getMenu('mudd',day,'breakfast')
-	muddLn=menu.getMenu('mudd',day,'lunch')
-	muddDn=menu.getMenu('mudd',day,'dinner')
+		cmcBr=menu.getMenu('cmc',day,'brunch')
+		cmcDn=menu.getMenu('cmc',day,'dinner')
 
-	scrippsBF=menu.getMenu('scripps',day,'breakfast')
-	scrippsLn=menu.getMenu('scripps',day,'lunch')
-	scrippsDn=menu.getMenu('scripps',day,'dinner')
+		muddBr=menu.getMenu('mudd',day,'brunch')
+		muddDn=menu.getMenu('mudd',day,'dinner')
 
-	allMenus= {'frank':[frankBF,frankLn,frankDn],
-				'frary':[fraryBF,fraryLn,fraryDn],
-				'oldenborg':[oldenborgLn],
-				'cmc':[cmcBF,cmcLn,cmcDn],
-				'mudd':[muddBF,muddLn,muddDn],
-				'scripps':[scrippsBF,scrippsLn,scrippsDn]
-				}
-	# with open('data.json', 'w') as f:
-	# 	json.dump(allMenus, f)
+		scrippsBr=menu.getMenu('scripps',day,'brunch')
+		scrippsDn=menu.getMenu('scripps',day,'dinner')
 
-	json_data=json.dumps(allMenus)
+		allMenus= {'frank':[frankBr,frankDn],
+					'frary':[fraryBr,fraryDn],
+					'cmc':[cmcBr,cmcDn],
+					'mudd':[muddBr,muddDn],
+					'scripps':[scrippsBr,scrippsDn]
+					}
 
-	pprint(json_data)
+		json_data=json.dumps(allMenus)
+
+		pprint(json_data)
+
+
+
+	else:
+		frankBF=menu.getMenu('frank',day,'breakfast')
+		frankLn=menu.getMenu('frank',day,'lunch')
+		frankDn=menu.getMenu('frank',day,'dinner')
+
+		fraryBF=menu.getMenu('frary',day,'breakfast')
+		fraryLn=menu.getMenu('frary',day,'lunch')
+		fraryDn=menu.getMenu('frary',day,'dinner')
+
+		oldenborgLn=menu.getMenu('oldenborg',day,'lunch')
+
+		cmcBF=menu.getMenu('cmc',day,'breakfast')
+		cmcLn=menu.getMenu('cmc',day,'lunch')
+		cmcDn=menu.getMenu('cmc',day,'dinner')
+
+		muddBF=menu.getMenu('mudd',day,'breakfast')
+		muddLn=menu.getMenu('mudd',day,'lunch')
+		muddDn=menu.getMenu('mudd',day,'dinner')
+
+		scrippsBF=menu.getMenu('scripps',day,'breakfast')
+		scrippsLn=menu.getMenu('scripps',day,'lunch')
+		scrippsDn=menu.getMenu('scripps',day,'dinner')
+
+		allMenus= {'frank':[frankBF,frankLn,frankDn],
+					'frary':[fraryBF,fraryLn,fraryDn],
+					'oldenborg':[oldenborgLn],
+					'cmc':[cmcBF,cmcLn,cmcDn],
+					'mudd':[muddBF,muddLn,muddDn],
+					'scripps':[scrippsBF,scrippsLn,scrippsDn]
+					}
+		# with open('data.json', 'w') as f:
+		# 	json.dump(allMenus, f)
+
+		json_data=json.dumps(allMenus)
+
+		pprint(json_data)
 
 if __name__=='__main__':
 	main()

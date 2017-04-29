@@ -22,7 +22,6 @@
 }
 #display td
 {
-	vertical-align: top;
 	text-align: top;
 	padding: 10px 20px;
 	color: #669;
@@ -31,3 +30,7 @@
 li{
 	vertical-align: top;
 }
+
+form {
+    text-align: center;
+    }

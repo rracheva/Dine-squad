@@ -1,4 +1,7 @@
 <?php
+$email=$_POST["email"];
+
+if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 	include('dbconn.php');
 	$conn= connect_to_db('Dine');
 
@@ -52,4 +55,10 @@
 
 
 	echo "Thank you for submitting your preference!";
+
+}
+
+else {
+	Echo "Invalid email!";
+}
 ?>
