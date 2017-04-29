@@ -7,7 +7,7 @@ include('rated.php');
 
 $getRatingsQuery="SELECT hall, AVG(rating) as rating  FROM Ratings GROUP BY hall";;
 if(isset($_POST['timeSpan'])){
-  $mealRating = $_POST['meal'];
+  $mealRating = $_POST['mealView'];
   if($_POST['timeSpan']=="week"){
     $getRatingsQuery = "SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY AND meal = '$mealRating' GROUP BY hall";
   }
@@ -91,7 +91,7 @@ while(!empty($row)){
         <option name="overall">overall</option>
       </select>
 
-      <select name ="meal">
+      <select name ="mealView">
         <option name="breakfast">breakfast</option>
         <option name="lunch">lunch</option>
         <option name="dinner">dinner</option>
