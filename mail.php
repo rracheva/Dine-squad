@@ -22,16 +22,18 @@ $string_dinner = file_get_contents("/data.json");
 $json_dinner_ranking = json_decode($string_dinner, true);
 // connect to db
 include ('dbconn.php');
-$conn = connect_to_db('testRatings');
-$query = "SELECT Em.email,C.type FROM EmailInfo AS Em AND Preferences AS P and Cuisine AS C 
-WHERE P.cid = C.cid AND Em.emailid = P.emailid";
-$result = mysql_query($query);  
+$conn = connect_to_db('DINE');
+$query ="SELECT EmailInfo.email,Cuisine.type 
+          FROM EmailInfo, Preferences, Cuisine 
+          WHERE Preferences.cid = Cuisine.cid 
+          AND EmailInfo.emailid = Preferences.emailid";
+$result = perform_query($conn,$query);  
 
 
  
 $array_email_preference_outcome = array();
 
-while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
   $email = $row['email'];
   $preference = $row['preferences'];
   $array_preference = meal_dininghall($preference);
@@ -39,7 +41,7 @@ while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 
 
-function meal_dininghall(preference){
+function meal_dininghall($preference){
   $preferences_dininghall_meal = array();
   foreach ($json_break_ranking as $key => $value) {
     if (strcmp($key, $preference) == 0){
@@ -73,7 +75,7 @@ $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 
 
-while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
   $to = $row['email'];
   $message = '
 
@@ -87,13 +89,13 @@ while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     
     <table>
       <tr>
-        <th>For breakfast go to'+ .$array_email_preference_outcome[$email]['breakfast'].'</th>
+        <th>For breakfast go to' .$array_email_preference_outcome[$email]['breakfast'].'</th>
       </tr>
       <tr>
-        <td>For lunch go to'+ .$array_email_preference_outcome[$email]['lunch'].'</th>
+        <td>For lunch go to' .$array_email_preference_outcome[$email]['lunch'].'</th>
       </tr>
       <tr>
-        <td>For dinner go to'+ .$array_email_preference_outcome[$email]['dinner'].'</th>
+        <td>For dinner go to' .$array_email_preference_outcome[$email]['dinner'].'</th>
       </tr>
     </table>
   </body>
