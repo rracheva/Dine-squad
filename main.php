@@ -47,7 +47,7 @@ $day= date("D", mktime(0,0,0,date("n", $time),date("j",$time)- 1 ,date("Y", $tim
 
 
 $menus=json_decode($real,true);
-$names= array('frank','frary','cmc','mudd','scripps');
+$names= array('frank','frary','cmc','mudd','scripps','pitzer');
 
 
 if($day==='Sat' || $day==='Sun'){

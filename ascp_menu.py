@@ -78,11 +78,15 @@ def main():
 		scrippsBr=menu.getMenu('scripps',day,'brunch')
 		scrippsDn=menu.getMenu('scripps',day,'dinner')
 
+		pitzerBr=menu.getMenu('pitzer',day,'brunch')
+		pitzerDn=menu.getMenu('pitzer',day,'dinner')
+
 		allMenus= {'frank':[frankBr,frankDn],
 					'frary':[fraryBr,fraryDn],
 					'cmc':[cmcBr,cmcDn],
 					'mudd':[muddBr,muddDn],
-					'scripps':[scrippsBr,scrippsDn]
+					'scripps':[scrippsBr,scrippsDn],
+					'pitzer' :  [pitzerBr,pitzerDn]
 					}
 
 		json_data=json.dumps(allMenus)
@@ -114,12 +118,19 @@ def main():
 		scrippsLn=menu.getMenu('scripps',day,'lunch')
 		scrippsDn=menu.getMenu('scripps',day,'dinner')
 
+		pitzerBF=menu.getMenu('pitzer',day,'breakfast')
+		pitzerLn=menu.getMenu('pitzer',day,'lunch')
+		pitzerDn=menu.getMenu('pitzer',day,'dinner')
+
+
+
 		allMenus= {'frank':[frankBF,frankLn,frankDn],
 					'frary':[fraryBF,fraryLn,fraryDn],
 					'oldenborg':[oldenborgLn],
 					'cmc':[cmcBF,cmcLn,cmcDn],
 					'mudd':[muddBF,muddLn,muddDn],
-					'scripps':[scrippsBF,scrippsLn,scrippsDn]
+					'scripps':[scrippsBF,scrippsLn,scrippsDn],
+					'pitzer' :  [pitzerBF,pitzerLn,pitzerDn]
 					}
 		# with open('data.json', 'w') as f:
 		# 	json.dump(allMenus, f)

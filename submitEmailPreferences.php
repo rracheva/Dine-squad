@@ -34,6 +34,7 @@ if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$insertPreference= "INSERT INTO Preferences(emailid, cid) VALUES ('$getEmailId','$getCuisineID')";
 		perform_query($conn,$insertPreference);
 
+		echo "Thank you for submitting your preference!";
 
 		
 
@@ -51,10 +52,11 @@ if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$update= "UPDATE Preferences SET cid= '$getCuisineID' WHERE emailid = '$getEmailId' ";
 		perform_query($conn,$update);
 		
+		echo "Thank you for updating your preference!";
+
 	}
 
 
-	echo "Thank you for submitting your preference!";
 
 }
 
