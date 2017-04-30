@@ -51,5 +51,12 @@ CREATE TABLE Scores(
 );
 -- check scheme
 -- Describe EmailPreferences;
+
+INSERT INTO Cuisine (type) VALUES('Mexican');
+INSERT INTO Cuisine (type) VALUES('Italian');
+INSERT INTO Cuisine (type) VALUES('Thai');
+INSERT INTO Cuisine (type) VALUES('Korean');
+INSERT INTO Cuisine (type) VALUES('Greek');
+
 Describe DiningRatings;
 Describe Preferences;

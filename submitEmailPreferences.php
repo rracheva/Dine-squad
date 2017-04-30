@@ -34,7 +34,10 @@ if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$insertPreference= "INSERT INTO Preferences(emailid, cid) VALUES ('$getEmailId','$getCuisineID')";
 		perform_query($conn,$insertPreference);
 
-		echo "Thank you for submitting your preference!";
+		echo '<p align="center">Thank you for submitting your preference!</p> <p align="center">You will now be redirected back to the main page.</p>';
+
+		header( "refresh:2; url=main.php" ); //wait for 5 seconds before redirecting
+
 
 		
 
@@ -52,7 +55,9 @@ if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$update= "UPDATE Preferences SET cid= '$getCuisineID' WHERE emailid = '$getEmailId' ";
 		perform_query($conn,$update);
 		
-		echo "Thank you for updating your preference!";
+		echo '<p align="center">Thank you for updating your preference!</p><p align="center"> You will now be redirected back to the main page.</p>';
+
+		header( "refresh:2; url=main.php" ); //wait for 5 seconds before redirecting
 
 	}
 
