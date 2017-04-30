@@ -110,13 +110,9 @@ def to_JSON(meal, list_of_cuisines, list_of_menus):
 
         data[cuisine] = scores
 
-    # to do: sort dictionary 
-
     with open(meal+'data.json', 'w') as f:
        json.dump(data, f)
 
-
-    print(data.items())
     return data
 
 

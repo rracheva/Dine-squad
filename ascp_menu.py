@@ -3,6 +3,8 @@ import json
 import re
 import datetime
 from pprint import pprint
+import menu_analysis as score
+
 class Menu(object):
 	def __init__(self):
 		self.data = None
@@ -18,7 +20,6 @@ class Menu(object):
 		)
 
 		data = json.loads(response.text)
-		print len(data)
 		foodList= []
 		if len(data)==0:
 			foodList.append("closed")
@@ -35,6 +36,21 @@ class Menu(object):
 			
 			return foodList
 
+
+def split_list(lst):
+
+	new_list = []
+
+	for string in lst:
+		new_list.append(string.split())
+
+	final_list = []
+
+	for new_lst in new_list:
+		for i in new_lst:
+			final_list.append(i)
+
+	return final_list
 
 def main():
 	dayNum=datetime.datetime.today().weekday()
@@ -68,7 +84,6 @@ def main():
 		fraryBr=menu.getMenu('frary',day,'brunch')
 		fraryDn=menu.getMenu('frary',day,'dinner')
 
-
 		cmcBr=menu.getMenu('cmc',day,'brunch')
 		cmcDn=menu.getMenu('cmc',day,'dinner')
 
@@ -89,9 +104,18 @@ def main():
 					'pitzer' :  [pitzerBr,pitzerDn]
 					}
 
+		cuisines = ["italian", "mexican", "greek", "thai", "korean"]
+		
+		score.to_JSON("breakfast", cuisines, [split_list(frankBr), split_list(fraryBr), \
+			split_list(cmcBr), split_list(pitzerBr), split_list(muddBr), split_list(scrippsBr)])
+		score.to_JSON("lunch", cuisines, [split_list(frankBr), split_list(fraryBr), \
+			split_list(cmcBr), split_list(pitzerBr), split_list(muddBr), split_list(scrippsBr)])
+		score.to_JSON("dinner", cuisines, [split_list(frankDn), split_list(fraryDn), \
+			split_list(cmcDn), split_list(pitzerDn), split_list(muddDn), \
+			split_list(scrippsDn)])
 		json_data=json.dumps(allMenus)
 
-		pprint(json_data)
+		#pprint(json_data)
 
 
 
@@ -135,9 +159,21 @@ def main():
 		# with open('data.json', 'w') as f:
 		# 	json.dump(allMenus, f)
 
+
+		cuisines = ["italian", "mexican", "greek", "thai", "korean"]
+		score.to_JSON("breakfast", cuisines, [split_list(frankBF), split_list(fraryBF), \
+			split_list(cmcBF), split_list(pitzerBF), split_list(muddBF), \
+			split_list(scrippsBF)])
+		score.to_JSON("lunch", cuisines, [split_list(frankLn), split_list(fraryLn), \
+			split_list(cmcLn), split_list(pitzerLn), split_list(muddLn), \
+			split_list(scrippsLn), split_list(oldenborgLn)])
+		score.to_JSON("dinner", cuisines, [split_list(frankDn), split_list(fraryDn), \
+			split_list(cmcDn), split_list(pitzerDn), split_list(muddDn), \
+			split_list(scrippsDn)])
+
 		json_data=json.dumps(allMenus)
 
-		pprint(json_data)
+		#pprint(json_data)
 
 if __name__=='__main__':
 	main()
