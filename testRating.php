@@ -1,7 +1,7 @@
 <?php 
 session_start(); 
 include ('dbconn.php');
-$conn = connect_to_db('testRatings');
+$conn = connect_to_db('DINE');
 include('rated.php');
 
 
@@ -46,6 +46,8 @@ while(!empty($row)){
     <script type="text/javascript">
       var scoresJ = <?php echo json_encode($scores)?>;
       console.log( (new Date ())/1000);
+      var colorsArray = ['red', 'blue', 'purple','maroon','orange','green'];
+      var currentColor = 0;
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
@@ -59,8 +61,10 @@ while(!empty($row)){
 
         // Create the data table.
         var data = new google.visualization.DataTable();
+
         data.addColumn('string', 'Dining Hall');
         data.addColumn('number', 'Rating');
+        // data.addColumn({role:'style'});
         for(var key in scoresJ){
           var rating = parseFloat(scoresJ[key]);
           data.addRows([[key,rating]]);
@@ -68,9 +72,24 @@ while(!empty($row)){
         
 
         // Set chart options
-        var options = {'title':'Dining Hall Ratings',
-                       'width':400,
-                       'height':300};
+        var options = {
+        				'width':400,
+                      	'height':300,
+
+        				chart:{
+        					'title':'Dining Hall Ratings',
+                      		 },
+                      	axes: {
+                      		y: {
+                      			all: {
+                      				range: {
+                      					max: 5,
+                      					min: 0
+                      				}
+                      			}
+                      		}
+                      	}
+                   };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
