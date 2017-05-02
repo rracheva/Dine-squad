@@ -34,10 +34,13 @@ $result = perform_query($conn,$query);
 $array_email_preference_outcome = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+  echo '<pre>'; print_r($row); echo '</pre>';
   $email = $row['email'];
+  
   $preference = $row['type'];
   $array_preference = meal_dininghall($preference);
-  $array_email_preference_outcome[$email] = $array_preference;
+  echo '<pre>'; print_r($array_preference); echo '</pre>';
+  $array_email_preference_outcome['$email'] = $array_preference;
 }
 
 
@@ -71,7 +74,7 @@ function meal_dininghall($preference){
   }
   return $preferences_dininghall_meal;
 }
-
+echo '<pre>'; print_r($preferences_dininghall_meal); echo '</pre>';
 //$to = 'rar32013@gmail.com, rar32013@pomona.edu, ralitsa.racheva@pomona.edu'; // note the comma
 
 // Subject
@@ -88,6 +91,7 @@ $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
   $to = $row['email'];
+  echo $to;
   $message = '
 
 
@@ -112,6 +116,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
   </body>
   </html>
   ';
+  echo $message;
   // Mail it
   // works on macs not on windows
 
