@@ -54,9 +54,16 @@ CREATE TABLE Scores(
 
 INSERT INTO Cuisine (type) VALUES('Mexican');
 INSERT INTO Cuisine (type) VALUES('Italian');
-INSERT INTO Cuisine (type) VALUES('Thai');
-INSERT INTO Cuisine (type) VALUES('Korean');
-INSERT INTO Cuisine (type) VALUES('Greek');
+/*INSERT INTO Cuisine (type) VALUES('Thai');*/
+/*INSERT INTO Cuisine (type) VALUES('Korean');*/
+/*INSERT INTO Cuisine (type) VALUES('Greek');*/
+INSERT INTO EmailInfo (email) VALUES('ralitsa.racheva@pomona.edu');
+INSERT INTO EmailInfo (email) VALUES('ad11rrac@uwcad.it');
+INSERT INTO Preferences (emailid,cid) VALUES(1,1);
+INSERT INTO Preferences (emailid,cid) VALUES(1,2);
+INSERT INTO Preferences (emailid,cid) VALUES(2,1);
+INSERT INTO Preferences (emailid,cid) VALUES(2,2);
 
-Describe DiningRatings;
 Describe Preferences;
+Describe Cuisine;
+Describe EmailInfo;
