@@ -14,15 +14,15 @@
 
 // get json ranking
 // update with real path to json files
-$string_break = file_get_contents("/data.json");
+$string_break = file_get_contents('breakfastdata.json');
 $json_break_ranking = json_decode($string_break, true);
-$string_lunch = file_get_contents("/data.json");
+$string_lunch = file_get_contents('lunchdata.json');
 $json_lunch_ranking = json_decode($string_lunch, true);
-$string_dinner = file_get_contents("/data.json");
+$string_dinner = file_get_contents('dinnerdata.json');
 $json_dinner_ranking = json_decode($string_dinner, true);
 // connect to db
 include ('dbconn.php');
-$conn = connect_to_db('DINE');
+$conn = connect_to_db('Dine');
 $query ="SELECT EmailInfo.email,Cuisine.type 
           FROM EmailInfo, Preferences, Cuisine 
           WHERE Preferences.cid = Cuisine.cid 
@@ -33,29 +33,40 @@ $result = perform_query($conn,$query);
  
 $array_email_preference_outcome = array();
 
-while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
   $email = $row['email'];
-  $preference = $row['preferences'];
+  $preference = $row['type'];
   $array_preference = meal_dininghall($preference);
   $array_email_preference_outcome[$email] = $array_preference;
 }
 
 
+function max_key($array_value){
+  $max_val = 0;
+  $max_key = 'Frank';
+  foreach ($array_value as $key => $value){
+    if ($value > $max_val){
+      $max_val = $value;
+      $max_key = $key;
+    }
+  }
+  return $max_key;
+}
 function meal_dininghall($preference){
   $preferences_dininghall_meal = array();
   foreach ($json_break_ranking as $key => $value) {
     if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['breakfast'] = key($value[0]);
+      $preferences_dininghall_meal['breakfast'] = max_key($value);
     }
   }
   foreach ($json_lunch_ranking as $key => $value) {
     if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['lunch'] = key($value[0]);
+      $preferences_dininghall_meal['lunch'] = max_key($value);
     }
   }
   foreach ($json_dinner_ranking as $key => $value) {
     if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['dinner'] = key($value[0]);
+      $preferences_dininghall_meal['dinner'] = max_key($value);
     }
   }
   return $preferences_dininghall_meal;
@@ -75,7 +86,7 @@ $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 
 
-while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
   $to = $row['email'];
   $message = '
 
