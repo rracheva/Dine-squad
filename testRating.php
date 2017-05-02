@@ -38,6 +38,7 @@ while(!empty($row)){
 <html>
 <head>
 	<meta charset="utf-8">
+
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="ratingValidate.js"></script>
 
@@ -73,23 +74,37 @@ while(!empty($row)){
 
         // Set chart options
         var options = {
-        				'width':400,
-                      	'height':300,
-
-        				chart:{
-        					'title':'Dining Hall Ratings',
-                      		 },
-                      	axes: {
-                      		y: {
-                      			all: {
-                      				range: {
-                      					max: 5,
-                      					min: 0
-                      				}
-                      			}
-                      		}
-                      	}
-                   };
+        		title: 'Dining Halls Ratings',
+        	chartArea: {width: '50%'},
+        hAxis: {
+          title: 'Rating',
+          minValue: 0,
+          maxValue: 4,
+          textStyle: {
+            bold: true,
+            fontSize: 12,
+            color: '#4d4d4d'
+          },
+          titleTextStyle: {
+            bold: true,
+            fontSize: 18,
+            color: '#4d4d4d'
+          }
+        },
+        vAxis: {
+          title: 'hall',
+          textStyle: {
+            fontSize: 14,
+            bold: true,
+            color: '#848484'
+          },
+          titleTextStyle: {
+            fontSize: 14,
+            bold: true,
+            color: '#848484'
+          }
+        }
+    };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -98,11 +113,9 @@ while(!empty($row)){
     </script>
 </head>
 
-<body>
-	<p> Rating Form Structure Test </p>
-	<br>
-	<br>
-	<br>
+<body align="center" style= "background-color: maroon">
+	<p style="font-size: 24px"> View Ratings </p>
+	<a href="main.php"> Return to Home</a>
 	<form id="selectRatingsForm" method="post">
       <select name="timeSpan">
         <option name="day">Current Day</option>
@@ -118,14 +131,10 @@ while(!empty($row)){
       <input type="submit" name="submit">
     </form>
     <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <div id="chart_div" align="center"></div>
     <div id="testing"></div>
-  </body>
-
-
-
-
-
+  	<br>
+  	<p style="font-size: 24px"> Rate Dining Halls! </p>
 	<form id="ratingForm" method= "post" id="cookieRatingForm">
 		<select name="Hall">
 			<option value ="Scripps"> Scripps </option>
@@ -161,7 +170,5 @@ while(!empty($row)){
 		<input name="submit" type="submit">
 
 	</form>
-
-	<a href="chartTest.php">Charts</a>
 </body>
 <html>
