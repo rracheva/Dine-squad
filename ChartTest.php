@@ -2,9 +2,6 @@
 session_start(); 
 include ('dbconn.php');
 $conn = connect_to_db('testRatings');
-//first query
-//SELECT * FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY;
-//SELECT hall, AVG (rating) as rating FROM Ratings WHERE timeDate >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND timedate < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY GROUP BY hall;
 
 $getRatingsQuery;
 if(isset($_POST['timeSpan'])){

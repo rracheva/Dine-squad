@@ -60,17 +60,18 @@ else{
 
 $mealDay = $ratedDay*3 + getMealNum($meal);
 $testingCookie = (string)$mealDay;
-
-if(!isset($_COOKIE[((string)$mealDay)]) && $canRate){
+//!isset($_COOKIE[((string)$mealDay)]) && 
+if($canRate){
 	//setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
-	setcookie($testingCookie, "test", time()+((86400)*$cookieExpiration));
+	//setcookie($testingCookie, "test", time()+((86400)*$cookieExpiration));
 	
 	print_r($_COOKIE);
-	$conn = connect_to_db('testRatings');
+	$conn = connect_to_db('DINE');
 	$diningHall =$_POST['Hall'];
 	$rating = $_POST['rating'];
 	$addRatingQuery = "INSERT INTO Ratings VALUES (NULL, '$diningHall', '$rating', '$meal', '$date')";
 	$resultRating = $conn->query($addRatingQuery);
+	echo $resultRating;
 	if(!$resultRating)die("Data failed".$conn->error);
 }
 else{
