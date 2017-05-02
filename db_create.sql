@@ -30,16 +30,15 @@ CREATE TABLE Preferences(
 
 
 
--- discuss with professor on approach
--- more rows or more columns
-CREATE TABLE DiningRatings (
-	drid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	dininghall VARCHAR(256) NOT NULL,
-	rating INT UNSIGNED NOT NULL
+CREATE TABLE RATINGS (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	hall VARCHAR(256) NOT NULL,
+	rating INT UNSIGNED NOT NULL,
+	meal VARCHAR(256) NOT NULL,
+	timeDate DATETIME NOT NULL
 );
 
 
--- might switch to excel file
 CREATE TABLE Scores(
 	sid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	dname VARCHAR(50),
@@ -49,14 +48,28 @@ CREATE TABLE Scores(
 	meal VARCHAR(256),
 	FOREIGN KEY (cid) REFERENCES Cuisine(cid)
 );
--- check scheme
--- Describe EmailPreferences;
 
+
+
+-- add cuisine types 
 INSERT INTO Cuisine (type) VALUES('Mexican');
 INSERT INTO Cuisine (type) VALUES('Italian');
 INSERT INTO Cuisine (type) VALUES('Thai');
 INSERT INTO Cuisine (type) VALUES('Korean');
 INSERT INTO Cuisine (type) VALUES('Greek');
+
+
+-- add some (fake) emails
+INSERT INTO EmailInfo (email) VALUES('tony@pom.edu');
+INSERT INTO EmailInfo (email) VALUES('kieran@pom.edu');
+INSERT INTO EmailInfo (email) VALUES('rali@pom.edu');
+INSERT INTO EmailInfo (email) VALUES('susie@pom.edu');
+
+
+
+
+
+
 
 Describe DiningRatings;
 Describe Preferences;
