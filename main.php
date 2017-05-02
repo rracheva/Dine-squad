@@ -1,31 +1,96 @@
+<?php 
+	// include('getMax.php');
+	// if(isset($_POST['mealOption']) && isset($_POST['prefSel'])){
+	// 	echo "heyyyyyyyyyyyyyyyyyyyyyyyyyy";
+	// 	$hall=getMax($_POST['mealOption'], $_POST['prefSel']);
+	// 	//$response="You should get '$_POST['prefSel]' at $hall for '$POST[$mealOption]"; 
+	// 	$response = $hall;
+	// }
+
+?>
+
 <!DOCTYPE html>
 <html>
 <body>
-	<p align ="center">enter email and choose/update preference to get emails of when the dining halls serve your favorite food! </p>
-<form action='submitEmailPreferences.php' method='POST'>
-	<p>Email: <input type='Email' name='email' id ="email"></p>
-	
-	<?php
-	include('dbconn.php');
-	$conn= connect_to_db('Dine');
-	$query= 'SELECT type from Cuisine';
 
-	$result= perform_query($conn,$query);
+	<div style= "width :1200;">
+		<div style= "float: left;width: 400px;">
+			<p align ="center">enter email and choose/update preference to get emails of when the dining halls serve your favorite food! </p>
+			<form action='submitEmailPreferences.php' method='POST'>
+				<p>Email: <input type='Email' name='email' id ="email"></p>
+				
+				<?php
+				include('dbconn.php');
+				$conn= connect_to_db('Dine');
+				$query= 'SELECT type from Cuisine';
 
-	echo '<p> Preference: <select name="CuisinePreference">';
+				$result= perform_query($conn,$query);
 
-	while ($row=$result->fetch_assoc()){
-		echo "<option value = '". $row["type"]. "'>".$row["type"]."</option>";
-	}
+				echo '<p> Preference: <select name="CuisinePreference">';
 
-	echo '</select></p>';
-	?>
-	
+				while ($row=$result->fetch_assoc()){
+					echo "<option value = '". $row["type"]. "'>".$row["type"]."</option>";
+				}
+
+				echo '</select></p>';
+				?>
+				
 
 
 
-	<input type ='submit' value= 'Subscribe!'>
-</form>
+				<input type ='submit' value= 'Subscribe!'>
+			</form>
+
+		</div>
+		<div style= "float: left;width:400px;">
+			<p align= "center">
+				<form method='POST'>
+					<p>MEAL: 
+						<select name="mealOption">
+							<option>breakfast</option>
+							<option>lunch</option>
+							<option>dinner</option>
+
+						</select>
+					</p>
+					<?php
+						include('getMax.php');
+
+						// include('dbconn.php');
+						// $conn= connect_to_db('Dine');
+						$query= 'SELECT type from Cuisine';
+
+						$result= perform_query($conn,$query);
+
+						echo '<p> Preference: <select name="prefSel">';
+
+						while ($row=$result->fetch_assoc()){
+							echo "<option value = '". $row["type"]. "'>".$row["type"]."</option>";
+						}
+
+						echo '</select></p>';
+						echo "<input type ='submit' value= 'find!'></form";
+						echo 	"</p>";
+
+
+						if(isset($_POST['mealOption']) && isset($_POST['prefSel'])){
+							$hall=getMax($_POST['mealOption'], $_POST['prefSel']);
+							echo "<p align='center'> You should go to '$hall' </p>";
+						}
+
+			
+					?>
+			
+
+
+		</div>
+		<div style= "float: left;width:400px;">
+			<p align= "center"> If you want to rate your favorite meals, click <a href="testRating.php">Here</a></p>
+		</div>
+	<br style="clear: left;" />
+
+
+</div>
 
 </body>
 

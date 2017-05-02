@@ -7,7 +7,7 @@ function getMax($meal, $cuisine) {
 	$str = file_get_contents($meal."data.json");
 	$json = json_decode($str, true);
 
-	$halls = ["frank", "frary", "oldenborg", "collins", "pitzer", "mudd", "scripps" ];
+	$halls = ["frank", "frary", "collins", "pitzer", "mudd", "scripps" ];
 	$max=0; 
 	$max_hall="frank";
 

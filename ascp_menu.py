@@ -115,7 +115,7 @@ def main():
 			split_list(scrippsDn)])
 		json_data=json.dumps(allMenus)
 
-		#pprint(json_data)
+		pprint(json_data)
 
 
 
@@ -173,7 +173,7 @@ def main():
 
 		json_data=json.dumps(allMenus)
 
-		#pprint(json_data)
+		pprint(json_data)
 
 if __name__=='__main__':
 	main()

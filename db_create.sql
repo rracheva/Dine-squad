@@ -52,12 +52,11 @@ CREATE TABLE Scores(
 
 
 -- add cuisine types 
-INSERT INTO Cuisine (type) VALUES('Mexican');
-INSERT INTO Cuisine (type) VALUES('Italian');
-<<<<<<< HEAD
-/*INSERT INTO Cuisine (type) VALUES('Thai');*/
-/*INSERT INTO Cuisine (type) VALUES('Korean');*/
-/*INSERT INTO Cuisine (type) VALUES('Greek');*/
+INSERT INTO Cuisine (type) VALUES('mexican');
+INSERT INTO Cuisine (type) VALUES('italian');
+INSERT INTO Cuisine (type) VALUES('thai');
+INSERT INTO Cuisine (type) VALUES('korean');
+INSERT INTO Cuisine (type) VALUES('greek');
 INSERT INTO EmailInfo (email) VALUES('ralitsa.racheva@pomona.edu');
 INSERT INTO EmailInfo (email) VALUES('ad11rrac@uwcad.it');
 INSERT INTO Preferences (emailid,cid) VALUES(1,1);

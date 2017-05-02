@@ -10,7 +10,6 @@ and menu score dictionaries to a JSON file, entitled meal+"data.json"
 
 """
 import os
-from scipy import stats
 import numpy as np
 import json
 
