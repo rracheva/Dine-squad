@@ -1,17 +1,7 @@
-<?php 
-	// include('getMax.php');
-	// if(isset($_POST['mealOption']) && isset($_POST['prefSel'])){
-	// 	echo "heyyyyyyyyyyyyyyyyyyyyyyyyyy";
-	// 	$hall=getMax($_POST['mealOption'], $_POST['prefSel']);
-	// 	//$response="You should get '$_POST['prefSel]' at $hall for '$POST[$mealOption]"; 
-	// 	$response = $hall;
-	// }
-
-?>
-
 <!DOCTYPE html>
 <html>
 <body>
+	<h1 align="center">Dine in Claremont</h1>
 
 	<div style= "width :1200;">
 		<div style= "float: left;width: 400px;">
@@ -44,8 +34,10 @@
 		</div>
 		<div style= "float: left;width:400px;">
 			<p align= "center">
+				<p align="center"> Pick a meal and preference to see where you should dine today! </p>
+
 				<form method='POST'>
-					<p>MEAL: 
+					<p>Meal: 
 						<select name="mealOption">
 							<option>breakfast</option>
 							<option>lunch</option>
@@ -56,11 +48,10 @@
 					<?php
 						include('getMax.php');
 
-						// include('dbconn.php');
-						// $conn= connect_to_db('Dine');
 						$query= 'SELECT type from Cuisine';
 
 						$result= perform_query($conn,$query);
+
 
 						echo '<p> Preference: <select name="prefSel">';
 
@@ -75,7 +66,7 @@
 
 						if(isset($_POST['mealOption']) && isset($_POST['prefSel'])){
 							$hall=getMax($_POST['mealOption'], $_POST['prefSel']);
-							echo "<p align='center'> You should go to '$hall' </p>";
+							echo "<p align='center'> You should go to $hall </p>";
 						}
 
 			

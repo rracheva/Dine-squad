@@ -63,7 +63,7 @@ $testingCookie = (string)$mealDay;
 // 
 if(!isset($_COOKIE[((string)$mealDay)]) && $canRate){
 	//setcookie('$mealDay','val', time() + (86400)*$cookieExpiration, "/");
-	//setcookie($testingCookie, "test", time()+((86400)*$cookieExpiration));
+	setcookie($testingCookie, "test", time()+((86400)*$cookieExpiration));
 	
 	print_r($_COOKIE);
 	$conn = connect_to_db('DINE');
