@@ -9,7 +9,7 @@ class Menu(object):
 	def __init__(self):
 		self.data = None
 		
-		self.processed_food = []
+		# get the menu using the dining hall,date and specific meal
 	def getMenu(self,din_hall, date, breakfast_lunch_dinner):
 
 		response = requests.get(
@@ -21,6 +21,7 @@ class Menu(object):
 
 		data = json.loads(response.text)
 		foodList= []
+		# when no data is obtained, dinnig hall is marked as closed
 		if len(data)==0:
 			foodList.append("closed")
 			return foodList
@@ -31,12 +32,13 @@ class Menu(object):
 			for item in list_food:
 				str_food = str(item)
 				str_food = regex.sub('', str_food).lower()
-				# self.processed_food.append(str_food)
 				foodList.append(str_food)
 			
+			# a list of strings representing the menu
 			return foodList
 
 
+# split a menu list to single words to help score them
 def split_list(lst):
 
 	new_list = []
@@ -53,6 +55,7 @@ def split_list(lst):
 	return final_list
 
 def main():
+	# get the day to run getMenu
 	dayNum=datetime.datetime.today().weekday()
 	day=""
 	if(dayNum==0):
@@ -75,9 +78,13 @@ def main():
 	elif(dayNum==6):
 		day='sun'
 	
+	# menu
 	menu= Menu()
+
+	# get brunch and dinner data if its the weekend
 	if day == 'sun' or day =='sat':
 
+		# gets epecific meals 
 		frankBr=menu.getMenu('frank',day,'brunch')
 		frankDn=menu.getMenu('frank',day,'dinner')
 
@@ -104,8 +111,10 @@ def main():
 					'pitzer' :  [pitzerBr,pitzerDn]
 					}
 
+		# cuisines
 		cuisines = ["italian", "mexican", "greek", "thai", "korean"]
 		
+		# score the menus using the cuisines
 		score.to_JSON("breakfast", cuisines, [split_list(frankBr), split_list(fraryBr), \
 			split_list(cmcBr), split_list(pitzerBr), split_list(muddBr), split_list(scrippsBr)])
 		score.to_JSON("lunch", cuisines, [split_list(frankBr), split_list(fraryBr), \
@@ -115,11 +124,13 @@ def main():
 			split_list(scrippsDn)])
 		json_data=json.dumps(allMenus)
 
+		# passes json object of all menus as a string to main.php
 		pprint(json_data)
 
 
 
-	else:
+	else: 
+		# gets breakfast/lunch/dinner if weekday
 		frankBF=menu.getMenu('frank',day,'breakfast')
 		frankLn=menu.getMenu('frank',day,'lunch')
 		frankDn=menu.getMenu('frank',day,'dinner')
@@ -156,8 +167,6 @@ def main():
 					'scripps':[scrippsBF,scrippsLn,scrippsDn],
 					'pitzer' :  [pitzerBF,pitzerLn,pitzerDn]
 					}
-		# with open('data.json', 'w') as f:
-		# 	json.dump(allMenus, f)
 
 
 		cuisines = ["italian", "mexican", "greek", "thai", "korean"]

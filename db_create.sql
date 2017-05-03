@@ -7,19 +7,20 @@ CREATE DATABASE DINE;
 USE DINE;
 
 GRANT ALL PRIVILEGES ON DINE.* to root@localhost IDENTIFIED BY 'root';
-
+-- stores email
 CREATE TABLE EmailInfo(
 	emailid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	email VARCHAR(256) NOT NULL
 );
 
-
+-- stores the cuisines
 CREATE TABLE Cuisine(
 	cid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(256) NOT NULL
 
 );
 
+-- stores the preference and uses the emailid and cid to bind the two
 CREATE TABLE Preferences(
 	emailid INT UNSIGNED NOT NULL,
 	cid INT UNSIGNED NOT NULL,
@@ -29,7 +30,7 @@ CREATE TABLE Preferences(
 	);
 
 
-
+-- stores the ratings
 CREATE TABLE RATINGS (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	hall VARCHAR(256) NOT NULL,
@@ -39,6 +40,7 @@ CREATE TABLE RATINGS (
 );
 
 
+-- the scores
 CREATE TABLE Scores(
 	sid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	dname VARCHAR(50),
@@ -57,14 +59,14 @@ INSERT INTO Cuisine (type) VALUES('italian');
 INSERT INTO Cuisine (type) VALUES('thai');
 INSERT INTO Cuisine (type) VALUES('korean');
 INSERT INTO Cuisine (type) VALUES('greek');
+-- add emails
 INSERT INTO EmailInfo (email) VALUES('ralitsa.racheva@pomona.edu');
 INSERT INTO EmailInfo (email) VALUES('ad11rrac@uwcad.it');
+-- add prefs
 INSERT INTO Preferences (emailid,cid) VALUES(1,1);
 INSERT INTO Preferences (emailid,cid) VALUES(1,2);
 INSERT INTO Preferences (emailid,cid) VALUES(2,1);
 INSERT INTO Preferences (emailid,cid) VALUES(2,2);
 
-Describe Preferences;
-Describe Cuisine;
-Describe EmailInfo;
+
 

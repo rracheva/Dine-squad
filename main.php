@@ -4,6 +4,7 @@
 	<h1 align="center">Dine in Claremont</h1>
 
 	<div style= "width :1200;">
+		<!-- the subscribe functionality -->
 		<div style= "float: left;width: 400px;">
 			<p align ="center">enter email and choose/update preference to get emails of when the dining halls serve your favorite food! </p>
 			<form action='submitEmailPreferences.php' method='POST'>
@@ -17,21 +18,20 @@
 				$result= perform_query($conn,$query);
 
 				echo '<p> Preference: <select name="CuisinePreference">';
-
+				// populate the suisine options from the db
 				while ($row=$result->fetch_assoc()){
 					echo "<option value = '". $row["type"]. "'>".$row["type"]."</option>";
 				}
 
 				echo '</select></p>';
 				?>
-				
-
-
-
 				<input type ='submit' value= 'Subscribe!'>
 			</form>
 
 		</div>
+
+		<!-- the core functionality displaying to users where they should eat
+		based of their meal option and Cuisine type -->
 		<div style= "float: left;width:400px;">
 			<p align= "center">
 				<p align="center"> Pick a meal and preference to see where you should dine today! </p>
@@ -75,6 +75,7 @@
 
 
 		</div>
+		<!-- link to ratings -->
 		<div style= "float: left;width:400px;">
 			<p align= "center"> If you want to rate your favorite meals, click <a href="testRating.php">Here</a></p>
 		</div>
@@ -95,17 +96,17 @@ echo "<link rel='stylesheet' type='text/css' href='main.css' />";
 
 //execute py script
 $tmp=exec("python ascp_menu.py");
+// get rid of the extra quotes
 $real=substr($tmp, 1, -1);
-
+// get the current day
 $time=time();
-//get menus
 $day= date("D", mktime(0,0,0,date("n", $time),date("j",$time)- 1 ,date("Y", $time)));
 
-
+// the menus and dininghalls (except oldenborg)
 $menus=json_decode($real,true);
 $names= array('frank','frary','cmc','mudd','scripps','pitzer');
 
-
+// display correct menus depending on the days
 if($day==='Sat' || $day==='Sun'){
 
 	echo '<table align="center" "border=1 rules=rows id="display">
@@ -118,7 +119,6 @@ if($day==='Sat' || $day==='Sun'){
 }
 
 else{
-//all dininghalls except oldenborg
 
 // oldenborg specific (only has lunch)
 $dininghall= "Oldenborg";
@@ -147,6 +147,7 @@ echo '<td> </td></tr>';
 
 }
 
+// fills in the menus in with the correct items
 foreach ($names as $name) {
 	echo '<tr>
 			<td>'. $name. '</td>';

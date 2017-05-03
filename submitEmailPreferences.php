@@ -1,11 +1,13 @@
 <?php
+// get the email from the submitted form
 $email=$_POST["email"];
 
+// validate the email
 if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 	include('dbconn.php');
 	$conn= connect_to_db('Dine');
 
-
+	// check if it already exists
 	$check= "Select * FROM EmailInfo WHERE email = '$_POST[email]'";
 	$result= perform_query($conn,$check);
 	$num_rows=mysqli_num_rows($result);
@@ -17,7 +19,7 @@ if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 	$row= $query->fetch_assoc();
 	$getCuisineID= $row["cid"];
 
-
+	// if email does not exist in db already
 	if($num_rows==0){
 		// insert new email
 		$insertEmail= "INSERT INTO EmailInfo (email) VALUES ('$_POST[email]')";
