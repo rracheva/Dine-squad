@@ -20,62 +20,40 @@ $string_lunch = file_get_contents('lunchdata.json');
 $json_lunch_ranking = json_decode($string_lunch, true);
 $string_dinner = file_get_contents('dinnerdata.json');
 $json_dinner_ranking = json_decode($string_dinner, true);
+echo $json_dinner_ranking;
+echo var_dump($json_lunch_ranking);
 // connect to db
 include ('dbconn.php');
+include ('getMax.php');
 $conn = connect_to_db('Dine');
 $query ="SELECT EmailInfo.email,Cuisine.type 
           FROM EmailInfo, Preferences, Cuisine 
           WHERE Preferences.cid = Cuisine.cid 
           AND EmailInfo.emailid = Preferences.emailid";
+
 $result = perform_query($conn,$query);  
 
 
- 
+
 $array_email_preference_outcome = array();
 
-while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-  echo '<pre>'; print_r($row); echo '</pre>';
+
+while ($row =$result->fetch_assoc()) {
   $email = $row['email'];
   
   $preference = $row['type'];
-  $array_preference = meal_dininghall($preference);
-  echo '<pre>'; print_r($array_preference); echo '</pre>';
-  $array_email_preference_outcome['$email'] = $array_preference;
-}
 
 
-function max_key($array_value){
-  $max_val = 0;
-  $max_key = 'Frank';
-  foreach ($array_value as $key => $value){
-    if ($value > $max_val){
-      $max_val = $value;
-      $max_key = $key;
-    }
-  }
-  return $max_key;
+
+  $bfast=  getMax("breakfast",$preference);
+  
+  $lunch= getMax("lunch",$preference);
+  $dinner= getMax("dinner",$preference);
+
+  $array_preference = [$bfast,$lunch,$dinner];
+
+  $array_email_preference_outcome[$email] = $array_preference;
 }
-function meal_dininghall($preference){
-  $preferences_dininghall_meal = array();
-  foreach ($json_break_ranking as $key => $value) {
-    if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['breakfast'] = max_key($value);
-    }
-  }
-  foreach ($json_lunch_ranking as $key => $value) {
-    if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['lunch'] = max_key($value);
-    }
-  }
-  foreach ($json_dinner_ranking as $key => $value) {
-    if (strcmp($key, $preference) == 0){
-      $preferences_dininghall_meal['dinner'] = max_key($value);
-    }
-  }
-  return $preferences_dininghall_meal;
-}
-echo '<pre>'; print_r($preferences_dininghall_meal); echo '</pre>';
-//$to = 'rar32013@gmail.com, rar32013@pomona.edu, ralitsa.racheva@pomona.edu'; // note the comma
 
 // Subject
 $subject = 'Claremont dining hall preferences';
@@ -87,9 +65,10 @@ $subject = 'Claremont dining hall preferences';
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
+$resultTwo = perform_query($conn,$query);  
 
-
-while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+while ($row = mysqli_fetch_array($resultTwo, MYSQLI_ASSOC)) {
+  echo "inside";
   $to = $row['email'];
   echo $to;
   $message = '
@@ -104,19 +83,18 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
     
     <table>
       <tr>
-        <th>For breakfast go to' .$array_email_preference_outcome[$email]['breakfast'].'</th>
+        <th>For breakfast go to ' .$array_email_preference_outcome[$to][0].'</th>
       </tr>
       <tr>
-        <td>For lunch go to' .$array_email_preference_outcome[$email]['lunch'].'</th>
+        <td>For lunch go to ' .$array_email_preference_outcome[$to][1].'</th>
       </tr>
       <tr>
-        <td>For dinner go to' .$array_email_preference_outcome[$email]['dinner'].'</th>
+        <td>For dinner go to ' .$array_email_preference_outcome[$to][2] .'</th>
       </tr>
     </table>
   </body>
   </html>
   ';
-  echo $message;
   // Mail it
   // works on macs not on windows
 
